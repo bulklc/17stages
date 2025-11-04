@@ -63,6 +63,14 @@
         fill: none;
         stroke-width: 10;
         opacity: 0.6;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .act-segment:hover {
+        opacity: 1;
+        stroke-width: 14;
+        filter: drop-shadow(0 0 10px currentColor);
       }
 
       .center-circle {
@@ -135,7 +143,7 @@
     <div class="hover-tooltip" id="hover-tooltip">
       <h3 id="tooltip-title"></h3>
       <div class="tooltip-meta">
-        <span id="tooltip-number"></span> | <span id="tooltip-act"></span>
+        <span id="tooltip-number"></span>
       </div>
       <p id="tooltip-description"></p>
     </div>
@@ -143,7 +151,7 @@
     <script>
       let stagesData;
       const tooltip = document.getElementById("hover-tooltip");
-      let currentTooltipStage = null;
+      let currentTooltipTarget = null;
       const stageIcons = {};
 
       // Load all stage icons
@@ -189,7 +197,6 @@
         const centerY = 400;
 
         // Define concentric circle layout
-        // Four rings total: outermost (Campbell's 17), then 3 inner rings
         const stageRadius = 28; // Circle size
         const ringGap = 70; // Space between rings
 
@@ -224,7 +231,6 @@
         marker.setAttribute("markerWidth", "5");
         marker.setAttribute("markerHeight", "5");
         marker.setAttribute("orient", "auto");
-        // Arrowhead path; fill follows stroke color in modern browsers
         const markerPath = document.createElementNS(
           "http://www.w3.org/2000/svg",
           "path"
@@ -298,13 +304,37 @@
           );
           path.classList.add("act-segment");
           path.setAttribute("stroke", actColors[act.act_number - 1]);
+
+          // Add hover/click events for act segments
+          const actData = {
+            type: "act",
+            name: act.act_name,
+            number: act.act_number,
+            stageCount: stageCount,
+            color: actColors[act.act_number - 1],
+          };
+
+          path.addEventListener("mouseenter", (e) =>
+            showActTooltip(e, actData)
+          );
+          path.addEventListener("mousemove", (e) => updateTooltipPosition(e));
+          path.addEventListener("mouseleave", hideTooltip);
+
+          path.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            if (currentTooltipTarget === actData) {
+              hideTooltip();
+            } else {
+              showActTooltip(e.touches[0], actData);
+            }
+          });
+
           svg.appendChild(path);
 
           currentAngle = endAngle;
         });
 
         // --- 18 Curved clockwise arrows, one between each stage ---
-        // Place arrows just inside the stage circles
         const arrowRadius = outerRadius - stageRadius - 12;
         const arrowsGroup = document.createElementNS(
           "http://www.w3.org/2000/svg",
@@ -312,12 +342,10 @@
         );
         arrowsGroup.setAttribute("class", "direction-arrows");
 
-        // Create one arrow between each pair of stages
-        const gapFactor = 0.2; // gap before arrow starts (20% of angleStep)
-        const spanFactor = 0.6; // arrow spans 60% of the space between stages
+        const gapFactor = 0.2;
+        const spanFactor = 0.6;
 
         for (let i = 0; i < totalStages; i++) {
-          // Position arrow in the gap between stage i and stage i+1
           const segmentStart = startAngle + angleStep * i;
 
           const a1 = segmentStart + angleStep * gapFactor;
@@ -332,7 +360,6 @@
             "http://www.w3.org/2000/svg",
             "path"
           );
-          // short arc, sweep=1 (clockwise)
           arrowPath.setAttribute(
             "d",
             `M ${x1} ${y1} A ${arrowRadius} ${arrowRadius} 0 0 1 ${x2} ${y2}`
@@ -395,7 +422,6 @@
             iconGroup.classList.add("stage-icon");
             iconGroup.setAttribute("clip-path", `url(#${clipPathId})`);
 
-            // Scale and position the icon
             const iconSize = stageRadius * 1.6;
             const iconX = x - iconSize / 2;
             const iconY = y - iconSize / 2;
@@ -410,17 +436,19 @@
           }
 
           // Mouse events for hover tooltip (desktop)
-          group.addEventListener("mouseenter", (e) => showTooltip(e, stage));
+          group.addEventListener("mouseenter", (e) =>
+            showStageTooltip(e, stage)
+          );
           group.addEventListener("mousemove", (e) => updateTooltipPosition(e));
           group.addEventListener("mouseleave", hideTooltip);
 
           // Touch events for mobile
           group.addEventListener("touchstart", (e) => {
             e.preventDefault();
-            if (currentTooltipStage === stage) {
+            if (currentTooltipTarget === stage) {
               hideTooltip();
             } else {
-              showTooltip(e.touches[0], stage);
+              showStageTooltip(e.touches[0], stage);
             }
           });
 
@@ -428,15 +456,41 @@
         });
       }
 
-      function showTooltip(event, stage) {
-        currentTooltipStage = stage;
+      function showStageTooltip(event, stage) {
+        currentTooltipTarget = stage;
         document.getElementById("tooltip-title").textContent = stage.name;
         document.getElementById(
           "tooltip-number"
-        ).textContent = `Stage ${stage.stage_number}`;
-        document.getElementById("tooltip-act").textContent = stage.actName;
+        ).textContent = `Stage ${stage.stage_number} | ${stage.actName}`;
         document.getElementById("tooltip-description").textContent =
           stage.description;
+
+        tooltip.classList.add("visible");
+        updateTooltipPosition(event);
+      }
+
+      function showActTooltip(event, actData) {
+        currentTooltipTarget = actData;
+        document.getElementById("tooltip-title").textContent = actData.name;
+        document.getElementById(
+          "tooltip-number"
+        ).textContent = `Act ${actData.number} | ${actData.stageCount} Stages`;
+
+        // Generate description based on act
+        let description = "";
+        if (actData.number === 1) {
+          description =
+            "The hero is called from their ordinary world to embark on an adventure. They initially refuse but eventually cross the threshold into the unknown.";
+        } else if (actData.number === 2) {
+          description =
+            "The hero faces tests and trials, meets allies and enemies, and ultimately achieves their goal through transformation and understanding.";
+        } else if (actData.number === 3) {
+          description =
+            "Having achieved the goal, the hero must return to the ordinary world, integrating their new wisdom and mastering both worlds.";
+        }
+
+        document.getElementById("tooltip-description").textContent =
+          description;
 
         tooltip.classList.add("visible");
         updateTooltipPosition(event);
@@ -461,19 +515,19 @@
       }
 
       function hideTooltip() {
-        currentTooltipStage = null;
+        currentTooltipTarget = null;
         tooltip.classList.remove("visible");
       }
 
       // Hide tooltip when clicking/touching outside
       document.addEventListener("click", (e) => {
-        if (!e.target.closest(".stage")) {
+        if (!e.target.closest(".stage") && !e.target.closest(".act-segment")) {
           hideTooltip();
         }
       });
 
       document.addEventListener("touchstart", (e) => {
-        if (!e.target.closest(".stage")) {
+        if (!e.target.closest(".stage") && !e.target.closest(".act-segment")) {
           hideTooltip();
         }
       });
