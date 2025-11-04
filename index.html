@@ -59,6 +59,15 @@
         pointer-events: none;
       }
 
+      .stage text {
+        pointer-events: none;
+        fill: #333;
+        font-size: 10px;
+        font-weight: 600;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+
       .act-segment {
         fill: none;
         stroke-width: 10;
@@ -74,25 +83,35 @@
       }
 
       .center-circle {
-        fill: rgba(255, 255, 255, 0.8);
+        fill: rgba(255, 255, 255, 0.95);
         stroke: rgba(100, 100, 100, 0.3);
         stroke-width: 2;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .center-circle:hover {
+        fill: rgba(255, 255, 255, 1);
+        stroke: rgba(255, 215, 0, 0.8);
+        stroke-width: 3;
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
       }
 
       .center-text {
         fill: #333;
-        font-size: 20px;
+        font-size: 16px;
         font-weight: bold;
         text-anchor: middle;
         dominant-baseline: middle;
+        pointer-events: none;
       }
 
       .hover-tooltip {
         position: fixed;
         background: rgba(0, 0, 0, 0.95);
-        padding: 15px 20px;
+        padding: 20px;
         border-radius: 10px;
-        max-width: 350px;
+        max-width: 450px;
         pointer-events: none;
         z-index: 999;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
@@ -103,6 +122,23 @@
 
       .hover-tooltip.visible {
         opacity: 1;
+      }
+
+      .tooltip-icon-large {
+        width: 100%;
+        margin-bottom: 15px;
+        display: none;
+      }
+
+      .tooltip-icon-large.visible {
+        display: block;
+      }
+
+      .tooltip-icon-large img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        border: 2px solid #ffd700;
       }
 
       .hover-tooltip h3 {
@@ -133,6 +169,155 @@
         stroke-width: 2;
         opacity: 0.5;
       }
+
+      /* Radial connection lines */
+      .connection-lines {
+        pointer-events: none;
+      }
+
+      .connection-line {
+        stroke: #666666;
+        stroke-width: 2;
+        stroke-dasharray: 3, 3;
+        opacity: 0.5;
+        transition: all 0.2s ease;
+      }
+
+      .connection-line.visible {
+        stroke: #ffd700;
+        stroke-width: 5;
+        stroke-dasharray: none;
+        opacity: 0.9;
+      }
+
+      /* Story selection modal */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .modal.visible {
+        display: flex;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content h2 {
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .modal-subtitle {
+        color: #666;
+        margin-bottom: 20px;
+        font-size: 0.95em;
+      }
+
+      .story-option {
+        padding: 15px;
+        margin: 10px 0;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .story-option:hover {
+        border-color: #ffd700;
+        background: #fffef5;
+        transform: translateX(5px);
+      }
+
+      .story-option.selected {
+        border-color: #ffd700;
+        background: #fff9e6;
+      }
+
+      .story-checkbox {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #666;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .story-option.selected .story-checkbox {
+        background: #ffd700;
+        border-color: #ffd700;
+      }
+
+      .story-option.selected .story-checkbox::after {
+        content: "✓";
+        color: white;
+        font-weight: bold;
+      }
+
+      .story-name {
+        font-weight: 600;
+        color: #333;
+      }
+
+      .modal-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      .modal-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .modal-button.cancel {
+        background: #ddd;
+        color: #666;
+      }
+
+      .modal-button.cancel:hover {
+        background: #ccc;
+      }
+
+      .modal-button.apply {
+        background: #ffd700;
+        color: #333;
+      }
+
+      .modal-button.apply:hover {
+        background: #ffed4e;
+      }
+
+      .selection-count {
+        color: #999;
+        font-size: 0.9em;
+        margin-top: 10px;
+      }
     </style>
   </head>
   <body>
@@ -141,6 +326,9 @@
     </div>
 
     <div class="hover-tooltip" id="hover-tooltip">
+      <div class="tooltip-icon-large" id="tooltip-icon-large">
+        <img id="tooltip-icon-img" src="" alt="Stage Icon" />
+      </div>
       <h3 id="tooltip-title"></h3>
       <div class="tooltip-meta">
         <span id="tooltip-number"></span>
@@ -148,13 +336,61 @@
       <p id="tooltip-description"></p>
     </div>
 
+    <!-- Story Selection Modal -->
+    <div class="modal" id="story-modal">
+      <div class="modal-content">
+        <h2>Compare Stories to Campbell's Journey</h2>
+        <p class="modal-subtitle">
+          Campbell's Hero's Journey is always shown on the outer ring. Select up
+          to 3 additional stories to compare.
+        </p>
+        <p class="selection-count">Select up to 3 stories</p>
+        <div id="story-options"></div>
+        <div class="modal-buttons">
+          <button class="modal-button cancel" onclick="closeModal()">
+            Cancel
+          </button>
+          <button class="modal-button apply" onclick="applySelection()">
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script>
       let stagesData;
       const tooltip = document.getElementById("hover-tooltip");
       let currentTooltipTarget = null;
       const stageIcons = {};
+      const loadedStoryData = {}; // Cache for loaded story data
+      const storyIcons = {}; // Cache for story-specific icons
+      let connectionLinesGroup = null; // Group for connection lines
 
-      // Load all stage icons
+      // Available stories in the workspace (excluding base, which is always shown)
+      const availableStories = [
+        { id: "matrix", name: "The Matrix", folder: "the_matrix" },
+        { id: "star_wars", name: "Star Wars", folder: "star_wars" },
+        { id: "sister_act", name: "Sister Act", folder: "sister_act" },
+        { id: "sister_act_2", name: "Sister Act 2", folder: "sister_act_2" },
+        {
+          id: "alice",
+          name: "Alice in Wonderland",
+          folder: "alice_in_wonderland",
+        },
+        { id: "hereditary", name: "Hereditary", folder: "hereditary" },
+        { id: "interstellar", name: "Interstellar", folder: "interstellar" },
+        { id: "the_shining", name: "The Shining", folder: "the_shining" },
+        {
+          id: "tim_and_erics",
+          name: "Tim and Eric's Billion Dollar Movie",
+          folder: "tim_and_erics_billion_dollar_movie",
+        },
+        { id: "toy_story", name: "Toy Story", folder: "toy_story" },
+      ];
+
+      let selectedStories = []; // Additional stories to compare (max 3)
+
+      // Load all stage icons for base (Campbell's)
       async function loadStageIcons() {
         const iconPromises = [];
         for (let i = 0; i <= 17; i++) {
@@ -178,6 +414,58 @@
         await Promise.all(iconPromises);
       }
 
+      // Load icons for a specific story
+      async function loadStoryIcons(storyFolder) {
+        if (storyIcons[storyFolder]) {
+          return storyIcons[storyFolder];
+        }
+
+        const icons = {};
+        const iconPromises = [];
+
+        for (let i = 0; i <= 17; i++) {
+          const paddedNum = i.toString().padStart(2, "0");
+          iconPromises.push(
+            fetch(`./content/${storyFolder}/icon_stage_${paddedNum}.png`)
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("Icon not found");
+                }
+                return response.blob();
+              })
+              .then((blob) => {
+                const url = URL.createObjectURL(blob);
+                icons[i] = url;
+              })
+              .catch((error) => {
+                // Icon doesn't exist, will fall back to stage number
+                console.log(`Icon ${i} not found for ${storyFolder}`);
+              })
+          );
+        }
+
+        await Promise.all(iconPromises);
+        storyIcons[storyFolder] = icons;
+        return icons;
+      }
+
+      // Load story data from JSON
+      async function loadStoryData(storyFolder) {
+        if (loadedStoryData[storyFolder]) {
+          return loadedStoryData[storyFolder];
+        }
+
+        try {
+          const response = await fetch(`./content/${storyFolder}/stages.json`);
+          const data = await response.json();
+          loadedStoryData[storyFolder] = data;
+          return data;
+        } catch (error) {
+          console.error(`Error loading story data for ${storyFolder}:`, error);
+          return null;
+        }
+      }
+
       // Load the stages data
       async function initialize() {
         await loadStageIcons();
@@ -185,14 +473,135 @@
         const data = await response.json();
         stagesData = data.heroic_journey;
         createCircle();
+        populateStoryOptions();
       }
 
       initialize().catch((error) =>
         console.error("Error initializing:", error)
       );
 
-      function createCircle() {
+      function populateStoryOptions() {
+        const container = document.getElementById("story-options");
+        container.innerHTML = "";
+
+        availableStories.forEach((story) => {
+          const option = document.createElement("div");
+          option.className = "story-option";
+          if (selectedStories.includes(story.id)) {
+            option.classList.add("selected");
+          }
+
+          option.innerHTML = `
+            <div class="story-checkbox"></div>
+            <div class="story-name">${story.name}</div>
+          `;
+
+          option.onclick = () => toggleStorySelection(story.id, option);
+          container.appendChild(option);
+        });
+      }
+
+      function toggleStorySelection(storyId, element) {
+        if (selectedStories.includes(storyId)) {
+          // User is deselecting a story
+          selectedStories = selectedStories.filter((id) => id !== storyId);
+          element.classList.remove("selected");
+        } else {
+          // User is selecting a story
+          if (selectedStories.length >= 3) {
+            // Remove the first (oldest) selected story
+            const oldestStoryId = selectedStories.shift();
+
+            // Find and update the UI for the deselected story
+            const storyOptions = document.querySelectorAll(".story-option");
+            storyOptions.forEach((option) => {
+              const storyName = option.querySelector(".story-name").textContent;
+              const story = availableStories.find((s) => s.name === storyName);
+              if (story && story.id === oldestStoryId) {
+                option.classList.remove("selected");
+              }
+            });
+          }
+
+          // Add the new selection
+          selectedStories.push(storyId);
+          element.classList.add("selected");
+        }
+      }
+
+      function openModal() {
+        document.getElementById("story-modal").classList.add("visible");
+        populateStoryOptions();
+      }
+
+      function closeModal() {
+        document.getElementById("story-modal").classList.remove("visible");
+      }
+
+      async function applySelection() {
+        closeModal();
+
+        // Load all selected story data and icons
+        const loadPromises = selectedStories.map(async (storyId) => {
+          const story = availableStories.find((s) => s.id === storyId);
+          await loadStoryData(story.folder);
+          await loadStoryIcons(story.folder);
+        });
+
+        await Promise.all(loadPromises);
+
+        // Redraw the circle with all stories
+        await createCircle();
+        updateCenterText();
+      }
+
+      function updateCenterText() {
+        const centerTextElements = document.querySelectorAll(".center-text");
+        if (selectedStories.length === 0) {
+          centerTextElements[0].textContent = "Click to Compare";
+          centerTextElements[1].textContent = "Stories";
+        } else if (selectedStories.length === 1) {
+          const story = availableStories.find(
+            (s) => s.id === selectedStories[0]
+          );
+          centerTextElements[0].textContent = "Comparing:";
+          centerTextElements[1].textContent = story.name;
+        } else {
+          centerTextElements[0].textContent = "Comparing";
+          centerTextElements[1].textContent = `${selectedStories.length} Stories`;
+        }
+      }
+
+      function showConnectionLines(stageIndex) {
+        if (selectedStories.length === 0 || !connectionLinesGroup) return;
+
+        // First, ensure all lines show their base state (grey)
+        const allLines =
+          connectionLinesGroup.querySelectorAll(".connection-line");
+        allLines.forEach((line) => {
+          line.classList.remove("visible");
+        });
+
+        // Then highlight the lines for the hovered stage (yellow and thicker)
+        const lines = connectionLinesGroup.querySelectorAll(
+          `.connection-line[data-stage="${stageIndex}"]`
+        );
+        lines.forEach((line) => line.classList.add("visible"));
+      }
+
+      function hideConnectionLines() {
+        if (!connectionLinesGroup) return;
+
+        // Remove the highlighted (yellow) state, keeping grey lines visible
+        const allLines =
+          connectionLinesGroup.querySelectorAll(".connection-line");
+        allLines.forEach((line) => line.classList.remove("visible"));
+      }
+
+      async function createCircle() {
         const svg = document.getElementById("journey-circle");
+        svg.innerHTML = ""; // Clear existing content
+
         const centerX = 400;
         const centerY = 400;
 
@@ -201,7 +610,7 @@
         const ringGap = 70; // Space between rings
 
         // Ring radii - working from outside in
-        const outerRadius = 360; // Outermost ring (Campbell)
+        const outerRadius = 360; // Outermost ring (Campbell - always shown)
         const ring2Radius = outerRadius - ringGap; // 290
         const ring3Radius = ring2Radius - ringGap; // 220
         const ring4Radius = ring3Radius - ringGap; // 150
@@ -213,6 +622,13 @@
           "#e74c3c", // Departure - Red
           "#3498db", // Initiation - Blue
           "#2ecc71", // Return - Green
+        ];
+
+        // Story-specific colors for inner rings
+        const storyColors = [
+          "#9b59b6", // Purple
+          "#f39c12", // Orange
+          "#1abc9c", // Teal
         ];
 
         // --- Arrowhead marker (for curved arrows) ---
@@ -242,7 +658,15 @@
         svg.appendChild(defs);
         // --- end marker ---
 
-        // Draw center circle
+        // Create connection lines group (before other elements so lines appear behind)
+        connectionLinesGroup = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "g"
+        );
+        connectionLinesGroup.classList.add("connection-lines");
+        svg.appendChild(connectionLinesGroup);
+
+        // Draw center circle (clickable)
         const centerCircle = document.createElementNS(
           "http://www.w3.org/2000/svg",
           "circle"
@@ -251,6 +675,7 @@
         centerCircle.setAttribute("cy", centerY);
         centerCircle.setAttribute("r", centerCircleRadius);
         centerCircle.classList.add("center-circle");
+        centerCircle.onclick = openModal;
         svg.appendChild(centerCircle);
 
         const centerText = document.createElementNS(
@@ -258,12 +683,22 @@
           "text"
         );
         centerText.setAttribute("x", centerX);
-        centerText.setAttribute("y", centerY);
+        centerText.setAttribute("y", centerY - 5);
         centerText.classList.add("center-text");
-        centerText.textContent = "Hero's Journey";
+        centerText.textContent = "Click to Compare";
         svg.appendChild(centerText);
 
-        // Collect all stages with their act info
+        const centerText2 = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "text"
+        );
+        centerText2.setAttribute("x", centerX);
+        centerText2.setAttribute("y", centerY + 15);
+        centerText2.classList.add("center-text");
+        centerText2.textContent = "Stories";
+        svg.appendChild(centerText2);
+
+        // Collect all stages with their act info (Campbell's base)
         const allStages = [];
         stagesData.acts.forEach((act) => {
           act.stages.forEach((stage) => {
@@ -372,11 +807,16 @@
         svg.appendChild(arrowsGroup);
         // --- end arrows ---
 
-        // Draw stages on outermost ring
+        // Store stage positions for connection lines
+        const stagePositions = [];
+
+        // Draw Campbell's stages on outermost ring
         allStages.forEach((stage, index) => {
           const angle = startAngle + angleStep * index;
           const x = centerX + outerRadius * Math.cos(angle);
           const y = centerY + outerRadius * Math.sin(angle);
+
+          stagePositions[index] = [{ x, y, radius: outerRadius }];
 
           const group = document.createElementNS(
             "http://www.w3.org/2000/svg",
@@ -384,6 +824,7 @@
           );
           group.classList.add("stage");
           group.setAttribute("data-index", index);
+          group.setAttribute("data-ring", "base");
 
           // Background circle
           const circle = document.createElementNS(
@@ -397,7 +838,7 @@
           group.appendChild(circle);
 
           // Add clip path for circular icon
-          const clipPathId = `clip-${index}`;
+          const clipPathId = `clip-base-${index}`;
           const clipPath = document.createElementNS(
             "http://www.w3.org/2000/svg",
             "clipPath"
@@ -436,34 +877,229 @@
           }
 
           // Mouse events for hover tooltip (desktop)
-          group.addEventListener("mouseenter", (e) =>
-            showStageTooltip(e, stage)
-          );
+          const stageData = {
+            ...stage,
+            storyName: "Campbell's Hero's Journey",
+            iconType: null, // Campbell stages don't show large icons
+          };
+
+          group.addEventListener("mouseenter", (e) => {
+            showStageTooltip(e, stageData);
+            showConnectionLines(index);
+          });
           group.addEventListener("mousemove", (e) => updateTooltipPosition(e));
-          group.addEventListener("mouseleave", hideTooltip);
+          group.addEventListener("mouseleave", (e) => {
+            hideTooltip();
+            hideConnectionLines();
+          });
 
           // Touch events for mobile
           group.addEventListener("touchstart", (e) => {
             e.preventDefault();
-            if (currentTooltipTarget === stage) {
+            if (currentTooltipTarget === stageData) {
               hideTooltip();
+              hideConnectionLines();
             } else {
-              showStageTooltip(e.touches[0], stage);
+              showStageTooltip(e.touches[0], stageData);
+              showConnectionLines(index);
             }
           });
 
           svg.appendChild(group);
         });
+
+        // Draw inner rings for selected stories
+        const ringRadii = [ring2Radius, ring3Radius, ring4Radius];
+
+        for (let i = 0; i < selectedStories.length; i++) {
+          const storyId = selectedStories[i];
+          const story = availableStories.find((s) => s.id === storyId);
+          const storyData = loadedStoryData[story.folder];
+          const icons = storyIcons[story.folder] || {};
+
+          if (!storyData) continue;
+
+          const ringRadius = ringRadii[i];
+          const storyColor = storyColors[i];
+
+          // Draw story stages
+          storyData.forEach((stageData, index) => {
+            const angle = startAngle + angleStep * index;
+            const x = centerX + ringRadius * Math.cos(angle);
+            const y = centerY + ringRadius * Math.sin(angle);
+
+            // Store position for connection lines
+            if (!stagePositions[index]) {
+              stagePositions[index] = [];
+            }
+            stagePositions[index].push({ x, y, radius: ringRadius });
+
+            const group = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "g"
+            );
+            group.classList.add("stage");
+            group.setAttribute("data-story", storyId);
+            group.setAttribute("data-index", index);
+            group.setAttribute("data-ring", i + 1);
+
+            // Background circle
+            const circle = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "circle"
+            );
+            circle.setAttribute("cx", x);
+            circle.setAttribute("cy", y);
+            circle.setAttribute("r", stageRadius * 0.85); // Slightly smaller for inner rings
+            circle.classList.add("stage-bg");
+            circle.setAttribute("fill", "white");
+            circle.setAttribute("stroke", storyColor);
+            group.appendChild(circle);
+
+            // Add clip path for circular icon
+            const clipPathId = `clip-${storyId}-${index}`;
+            const clipPath = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "clipPath"
+            );
+            clipPath.setAttribute("id", clipPathId);
+            const clipCircle = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "circle"
+            );
+            clipCircle.setAttribute("cx", x);
+            clipCircle.setAttribute("cy", y);
+            clipCircle.setAttribute("r", stageRadius * 0.85 - 2);
+            clipPath.appendChild(clipCircle);
+            svg.appendChild(clipPath);
+
+            // Add PNG icon if available, otherwise show stage number
+            if (icons[stageData.stage_number]) {
+              const iconImage = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "image"
+              );
+
+              const iconSize = stageRadius * 0.85 * 2;
+              const iconX = x - iconSize / 2;
+              const iconY = y - iconSize / 2;
+
+              iconImage.setAttribute("href", icons[stageData.stage_number]);
+              iconImage.setAttribute("x", iconX);
+              iconImage.setAttribute("y", iconY);
+              iconImage.setAttribute("width", iconSize);
+              iconImage.setAttribute("height", iconSize);
+              iconImage.setAttribute("clip-path", `url(#${clipPathId})`);
+              iconImage.classList.add("stage-icon");
+
+              group.appendChild(iconImage);
+            } else {
+              // Fallback to stage number if no icon
+              const stageText = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "text"
+              );
+              stageText.setAttribute("x", x);
+              stageText.setAttribute("y", y);
+              stageText.textContent = stageData.stage_number;
+              group.appendChild(stageText);
+            }
+
+            // Mouse events for hover tooltip
+            // Get the corresponding Campbell stage name
+            const campbellStage = allStages[index];
+            const tooltipData = {
+              name: campbellStage.name,
+              description: stageData.description,
+              stage_number: stageData.stage_number,
+              storyName: story.name,
+              actName: campbellStage.actName,
+              iconType: icons[stageData.stage_number] ? "png" : null,
+              iconUrl: icons[stageData.stage_number] || null,
+            };
+
+            group.addEventListener("mouseenter", (e) => {
+              showStageTooltip(e, tooltipData);
+              showConnectionLines(index);
+            });
+            group.addEventListener("mousemove", (e) =>
+              updateTooltipPosition(e)
+            );
+            group.addEventListener("mouseleave", (e) => {
+              hideTooltip();
+              hideConnectionLines();
+            });
+
+            group.addEventListener("touchstart", (e) => {
+              e.preventDefault();
+              if (currentTooltipTarget === tooltipData) {
+                hideTooltip();
+                hideConnectionLines();
+              } else {
+                showStageTooltip(e.touches[0], tooltipData);
+                showConnectionLines(index);
+              }
+            });
+
+            svg.appendChild(group);
+          });
+        }
+
+        // Create connection lines between stages
+        if (selectedStories.length > 0) {
+          stagePositions.forEach((positions, stageIndex) => {
+            if (positions.length > 1) {
+              // Draw lines connecting all rings for this stage
+              for (let i = 0; i < positions.length - 1; i++) {
+                const line = document.createElementNS(
+                  "http://www.w3.org/2000/svg",
+                  "line"
+                );
+                line.setAttribute("x1", positions[i].x);
+                line.setAttribute("y1", positions[i].y);
+                line.setAttribute("x2", positions[i + 1].x);
+                line.setAttribute("y2", positions[i + 1].y);
+                line.classList.add("connection-line");
+                line.setAttribute("data-stage", stageIndex);
+                connectionLinesGroup.appendChild(line);
+              }
+            }
+          });
+        }
       }
 
       function showStageTooltip(event, stage) {
         currentTooltipTarget = stage;
-        document.getElementById("tooltip-title").textContent = stage.name;
-        document.getElementById(
-          "tooltip-number"
-        ).textContent = `Stage ${stage.stage_number} | ${stage.actName}`;
+
+        // Update title and text content
+        document.getElementById("tooltip-title").textContent =
+          stage.name || `Stage ${stage.stage_number}`;
+
+        let metaText = `Stage ${stage.stage_number}`;
+        if (stage.actName) {
+          metaText += ` | ${stage.actName}`;
+        }
+        if (stage.storyName) {
+          metaText = `${stage.storyName} - ${metaText}`;
+        }
+
+        document.getElementById("tooltip-number").textContent = metaText;
         document.getElementById("tooltip-description").textContent =
           stage.description;
+
+        // Handle large icon display for story stages only
+        const iconContainer = document.getElementById("tooltip-icon-large");
+        const iconImg = document.getElementById("tooltip-icon-img");
+
+        if (stage.iconType === "png" && stage.iconUrl) {
+          // Show large PNG image for story stages
+          iconImg.src = stage.iconUrl;
+          iconImg.alt = stage.name;
+          iconContainer.classList.add("visible");
+        } else {
+          // Hide large icon for Campbell's base stages
+          iconContainer.classList.remove("visible");
+        }
 
         tooltip.classList.add("visible");
         updateTooltipPosition(event);
@@ -471,6 +1107,12 @@
 
       function showActTooltip(event, actData) {
         currentTooltipTarget = actData;
+
+        // Hide large icon for act tooltips
+        document
+          .getElementById("tooltip-icon-large")
+          .classList.remove("visible");
+
         document.getElementById("tooltip-title").textContent = actData.name;
         document.getElementById(
           "tooltip-number"
@@ -517,18 +1159,24 @@
       function hideTooltip() {
         currentTooltipTarget = null;
         tooltip.classList.remove("visible");
+        // Hide large icon when tooltip closes
+        document
+          .getElementById("tooltip-icon-large")
+          .classList.remove("visible");
       }
 
       // Hide tooltip when clicking/touching outside
       document.addEventListener("click", (e) => {
         if (!e.target.closest(".stage") && !e.target.closest(".act-segment")) {
           hideTooltip();
+          hideConnectionLines();
         }
       });
 
       document.addEventListener("touchstart", (e) => {
         if (!e.target.closest(".stage") && !e.target.closest(".act-segment")) {
           hideTooltip();
+          hideConnectionLines();
         }
       });
     </script>

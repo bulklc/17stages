@@ -1,0 +1,74 @@
+[
+  {
+    "stage_number": 0,
+    "description": "Luke Skywalker lives a humble life on Tatooine, dreaming of adventure beyond his desert home."
+  },
+  {
+    "stage_number": 1,
+    "description": "Luke discovers a message from Princess Leia hidden in R2-D2, setting him on a path to join the Rebel Alliance."
+  },
+  {
+    "stage_number": 2,
+    "description": "Luke meets Obi-Wan Kenobi, who begins to teach him about the Force and the ways of the Jedi."
+  },
+  {
+    "stage_number": 3,
+    "description": "Luke begins his training as a Jedi, learning to harness the Force and develop his skills."
+  },
+  {
+    "stage_number": 4,
+    "description": "Luke joins the Rebel Alliance and participates in the mission to destroy the Death Star."
+  },
+  {
+    "stage_number": 5,
+    "description": "Luke faces Darth Vader in a climactic lightsaber duel."
+  },
+  {
+    "stage_number": 6,
+    "description": "Luke learns the truth about his heritage and the dark side of the Force."
+  },
+  {
+    "stage_number": 7,
+    "description": "Luke struggles with his identity and the temptation of the dark side."
+  },
+  {
+    "stage_number": 8,
+    "description": "Luke begins to embrace his destiny as a Jedi and prepares for the final confrontation."
+  },
+  {
+    "stage_number": 9,
+    "description": "Luke confronts Emperor Palpatine and Darth Vader in a decisive battle."
+  },
+  {
+    "stage_number": 10,
+    "description": "Luke resists the dark side and helps redeem his father, bringing balance to the Force."
+  },
+  {
+    "stage_number": 11,
+    "description": "The galaxy begins to heal as the Empire falls and peace is restored."
+  },
+  {
+    "stage_number": 12,
+    "description": "Luke reflects on his journey and the legacy of the Jedi."
+  },
+  {
+    "stage_number": 13,
+    "description": "Luke begins to train a new generation of Jedi, passing on his knowledge and experience."
+  },
+  {
+    "stage_number": 14,
+    "description": "Luke faces new challenges as he works to rebuild the Jedi Order."
+  },
+  {
+    "stage_number": 15,
+    "description": "Luke confronts the remnants of the dark side and strives to bring balance to the Force."
+  },
+  {
+    "stage_number": 16,
+    "description": "Luke prepares for the future, hopeful for a new era of peace and harmony in the galaxy."
+  },
+  {
+    "stage_number": 17,
+    "description": "The story concludes with Luke's legacy enduring and the Jedi Order thriving."
+  }
+]
