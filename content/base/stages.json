@@ -1,0 +1,117 @@
+{
+  "heroic_journey": {
+    "title": "The Hero's Journey (Monomyth)",
+    "author": "Joseph Campbell",
+    "source": "The Hero with a Thousand Faces (1949)",
+    "acts": [
+      {
+        "act_number": 1,
+        "act_name": "Departure (Separation)",
+        "stages": [
+          {
+            "stage_number": 0,
+            "name": "The Ordinary World",
+            "description": "The hero's normal life before the adventure begins. This establishes the hero's background, capabilities, outlook, and the mundane world they inhabit before the journey transforms them."
+          },
+          {
+            "stage_number": 1,
+            "name": "The Call to Adventure",
+            "description": "The hero is presented with a problem, challenge, or adventure to undertake. This disrupts the comfort of their ordinary world."
+          },
+          {
+            "stage_number": 2,
+            "name": "Refusal of the Call",
+            "description": "The hero refuses the adventure because of hesitation, fears, insecurity, or any other number of issues that prevent them from facing the unknown."
+          },
+          {
+            "stage_number": 3,
+            "name": "Supernatural Aid",
+            "description": "Once the hero has committed to the quest, a mentor or magical helper appears or becomes known to provide supernatural aid, guidance, or a magical gift."
+          },
+          {
+            "stage_number": 4,
+            "name": "Crossing the First Threshold",
+            "description": "The hero commits to leaving the ordinary world and enters the special world or unknown. They cross into the field of adventure, leaving the known limits of their world."
+          },
+          {
+            "stage_number": 5,
+            "name": "Belly of the Whale",
+            "description": "The hero is fully separated from their known world and self. This represents a form of self-annihilation and rebirth. The hero is swallowed into the unknown."
+          }
+        ]
+      },
+      {
+        "act_number": 2,
+        "act_name": "Initiation",
+        "stages": [
+          {
+            "stage_number": 6,
+            "name": "The Road of Trials",
+            "description": "The hero faces tests, tasks, or ordeals that must be overcome. They often fail one or more of these tests, which are repeated until success is achieved."
+          },
+          {
+            "stage_number": 7,
+            "name": "The Meeting with the Goddess",
+            "description": "The hero experiences unconditional love, often represented by a powerful female figure. This represents the point when the hero experiences a love that has the power to inspire."
+          },
+          {
+            "stage_number": 8,
+            "name": "Woman as Temptress",
+            "description": "The hero faces temptations, often of a physical or material nature, that may lead them to abandon or stray from their quest. This tests the hero's ability to focus on the spiritual goal."
+          },
+          {
+            "stage_number": 9,
+            "name": "Atonement with the Father",
+            "description": "The hero must confront whatever holds ultimate power in their life. This is often a father figure or authority that has power over life and death."
+          },
+          {
+            "stage_number": 10,
+            "name": "Apotheosis",
+            "description": "The hero achieves a period of rest, peace, and fulfillment before beginning the return. This is the point of realization and greater understanding. The hero dies to their old self."
+          },
+          {
+            "stage_number": 11,
+            "name": "The Ultimate Boon",
+            "description": "The hero achieves the goal of the quest. This is the achievement of the goal or the object of the quest. It is what the hero went on the journey to get."
+          }
+        ]
+      },
+      {
+        "act_number": 3,
+        "act_name": "Return",
+        "stages": [
+          {
+            "stage_number": 12,
+            "name": "Refusal of the Return",
+            "description": "Having found bliss and enlightenment in the other world, the hero may be reluctant to return to the ordinary world to bestow the boon upon their fellow humans."
+          },
+          {
+            "stage_number": 13,
+            "name": "The Magic Flight",
+            "description": "If the boon has been achieved against the opposition of its guardian, the hero's return may be complicated by pursuit and escape. The hero must retain the wisdom gained during the quest."
+          },
+          {
+            "stage_number": 14,
+            "name": "Rescue from Without",
+            "description": "The hero may need powerful guides and rescuers to bring them back to everyday life, especially if they have been wounded or weakened by their experience."
+          },
+          {
+            "stage_number": 15,
+            "name": "The Crossing of the Return Threshold",
+            "description": "The hero must retain the wisdom gained on the quest and integrate that wisdom into a human life, while sharing the wisdom with the rest of the world."
+          },
+          {
+            "stage_number": 16,
+            "name": "Master of Two Worlds",
+            "description": "The hero achieves balance between the material and spiritual, the inner and outer worlds. They have become comfortable and competent in both worlds."
+          },
+          {
+            "stage_number": 17,
+            "name": "Freedom to Live",
+            "description": "The hero is free from fears and anxieties. They live in the moment, neither anticipating the future nor regretting the past. This is mastery of life."
+          }
+        ]
+      }
+    ]
+  }
+}

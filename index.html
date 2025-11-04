@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monomyth Comparison</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8f4ed;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        color: #333;
+        overflow: hidden;
+      }
+
+      .container {
+        position: relative;
+        width: 100vh;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
+      }
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .stage {
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .stage circle.stage-bg {
+        fill: #fff;
+        stroke: #333;
+        stroke-width: 2;
+        transition: all 0.3s ease;
+      }
+
+      .stage:hover circle.stage-bg {
+        fill: #ffd700;
+        stroke-width: 4;
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+      }
+
+      .stage .stage-icon {
+        pointer-events: none;
+      }
+
+      .act-segment {
+        fill: none;
+        stroke-width: 10;
+        opacity: 0.6;
+      }
+
+      .center-circle {
+        fill: rgba(255, 255, 255, 0.8);
+        stroke: rgba(100, 100, 100, 0.3);
+        stroke-width: 2;
+      }
+
+      .center-text {
+        fill: #333;
+        font-size: 20px;
+        font-weight: bold;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+
+      .hover-tooltip {
+        position: fixed;
+        background: rgba(0, 0, 0, 0.95);
+        padding: 15px 20px;
+        border-radius: 10px;
+        max-width: 350px;
+        pointer-events: none;
+        z-index: 999;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        border: 2px solid #ffd700;
+      }
+
+      .hover-tooltip.visible {
+        opacity: 1;
+      }
+
+      .hover-tooltip h3 {
+        color: #ffd700;
+        margin-bottom: 8px;
+        font-size: 1.3em;
+      }
+
+      .hover-tooltip .tooltip-meta {
+        color: #aaa;
+        margin-bottom: 10px;
+        font-size: 0.85em;
+      }
+
+      .hover-tooltip p {
+        line-height: 1.5;
+        color: #ddd;
+        font-size: 0.95em;
+      }
+
+      /* Direction arrows along the main circle */
+      .direction-arrows {
+        pointer-events: none;
+      }
+      .circle-arrow {
+        fill: none;
+        stroke: #666;
+        stroke-width: 2;
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <svg id="journey-circle" viewBox="0 0 800 800"></svg>
+    </div>
+
+    <div class="hover-tooltip" id="hover-tooltip">
+      <h3 id="tooltip-title"></h3>
+      <div class="tooltip-meta">
+        <span id="tooltip-number"></span> | <span id="tooltip-act"></span>
+      </div>
+      <p id="tooltip-description"></p>
+    </div>
+
+    <script>
+      let stagesData;
+      const tooltip = document.getElementById("hover-tooltip");
+      let currentTooltipStage = null;
+      const stageIcons = {};
+
+      // Load all stage icons
+      async function loadStageIcons() {
+        const iconPromises = [];
+        for (let i = 0; i <= 17; i++) {
+          const paddedNum = i.toString().padStart(2, "0");
+          iconPromises.push(
+            fetch(`./content/base/icon_stage_${paddedNum}.html`)
+              .then((response) => response.text())
+              .then((html) => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+                const svgElement = doc.querySelector("svg");
+                if (svgElement) {
+                  stageIcons[i] = svgElement.innerHTML;
+                }
+              })
+              .catch((error) =>
+                console.error(`Error loading icon ${i}:`, error)
+              )
+          );
+        }
+        await Promise.all(iconPromises);
+      }
+
+      // Load the stages data
+      async function initialize() {
+        await loadStageIcons();
+        const response = await fetch("./content/base/stages.json");
+        const data = await response.json();
+        stagesData = data.heroic_journey;
+        createCircle();
+      }
+
+      initialize().catch((error) =>
+        console.error("Error initializing:", error)
+      );
+
+      function createCircle() {
+        const svg = document.getElementById("journey-circle");
+        const centerX = 400;
+        const centerY = 400;
+
+        // Define concentric circle layout
+        // Four rings total: outermost (Campbell's 17), then 3 inner rings
+        const stageRadius = 28; // Circle size
+        const ringGap = 70; // Space between rings
+
+        // Ring radii - working from outside in
+        const outerRadius = 360; // Outermost ring (Campbell)
+        const ring2Radius = outerRadius - ringGap; // 290
+        const ring3Radius = ring2Radius - ringGap; // 220
+        const ring4Radius = ring3Radius - ringGap; // 150
+
+        const centerCircleRadius = 80; // Center circle
+
+        // Act colors
+        const actColors = [
+          "#e74c3c", // Departure - Red
+          "#3498db", // Initiation - Blue
+          "#2ecc71", // Return - Green
+        ];
+
+        // --- Arrowhead marker (for curved arrows) ---
+        const defs = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "defs"
+        );
+        const marker = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "marker"
+        );
+        marker.setAttribute("id", "arrowhead");
+        marker.setAttribute("viewBox", "0 0 10 10");
+        marker.setAttribute("refX", "9");
+        marker.setAttribute("refY", "5");
+        marker.setAttribute("markerWidth", "5");
+        marker.setAttribute("markerHeight", "5");
+        marker.setAttribute("orient", "auto");
+        // Arrowhead path; fill follows stroke color in modern browsers
+        const markerPath = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "path"
+        );
+        markerPath.setAttribute("d", "M 0 0 L 10 5 L 0 10 z");
+        markerPath.setAttribute("fill", "#666");
+        marker.appendChild(markerPath);
+        defs.appendChild(marker);
+        svg.appendChild(defs);
+        // --- end marker ---
+
+        // Draw center circle
+        const centerCircle = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "circle"
+        );
+        centerCircle.setAttribute("cx", centerX);
+        centerCircle.setAttribute("cy", centerY);
+        centerCircle.setAttribute("r", centerCircleRadius);
+        centerCircle.classList.add("center-circle");
+        svg.appendChild(centerCircle);
+
+        const centerText = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "text"
+        );
+        centerText.setAttribute("x", centerX);
+        centerText.setAttribute("y", centerY);
+        centerText.classList.add("center-text");
+        centerText.textContent = "Hero's Journey";
+        svg.appendChild(centerText);
+
+        // Collect all stages with their act info
+        const allStages = [];
+        stagesData.acts.forEach((act) => {
+          act.stages.forEach((stage) => {
+            allStages.push({
+              ...stage,
+              actName: act.act_name,
+              actNumber: act.act_number,
+              actColor: actColors[act.act_number - 1],
+            });
+          });
+        });
+
+        const totalStages = allStages.length;
+        const angleStep = (2 * Math.PI) / totalStages;
+        const startAngle = -Math.PI / 2; // Start at top
+
+        // Draw act segments on outermost ring
+        let currentAngle = startAngle;
+        stagesData.acts.forEach((act) => {
+          const stageCount = act.stages.length;
+          const segmentAngle = angleStep * stageCount;
+
+          const path = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "path"
+          );
+          const startX = centerX + outerRadius * Math.cos(currentAngle);
+          const startY = centerY + outerRadius * Math.sin(currentAngle);
+          const endAngle = currentAngle + segmentAngle;
+          const endX = centerX + outerRadius * Math.cos(endAngle);
+          const endY = centerY + outerRadius * Math.sin(endAngle);
+
+          const largeArc = segmentAngle > Math.PI ? 1 : 0;
+
+          path.setAttribute(
+            "d",
+            `M ${startX} ${startY} A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${endX} ${endY}`
+          );
+          path.classList.add("act-segment");
+          path.setAttribute("stroke", actColors[act.act_number - 1]);
+          svg.appendChild(path);
+
+          currentAngle = endAngle;
+        });
+
+        // --- 18 Curved clockwise arrows, one between each stage ---
+        // Place arrows just inside the stage circles
+        const arrowRadius = outerRadius - stageRadius - 12;
+        const arrowsGroup = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "g"
+        );
+        arrowsGroup.setAttribute("class", "direction-arrows");
+
+        // Create one arrow between each pair of stages
+        const gapFactor = 0.2; // gap before arrow starts (20% of angleStep)
+        const spanFactor = 0.6; // arrow spans 60% of the space between stages
+
+        for (let i = 0; i < totalStages; i++) {
+          // Position arrow in the gap between stage i and stage i+1
+          const segmentStart = startAngle + angleStep * i;
+
+          const a1 = segmentStart + angleStep * gapFactor;
+          const a2 = a1 + angleStep * spanFactor;
+
+          const x1 = centerX + arrowRadius * Math.cos(a1);
+          const y1 = centerY + arrowRadius * Math.sin(a1);
+          const x2 = centerX + arrowRadius * Math.cos(a2);
+          const y2 = centerY + arrowRadius * Math.sin(a2);
+
+          const arrowPath = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "path"
+          );
+          // short arc, sweep=1 (clockwise)
+          arrowPath.setAttribute(
+            "d",
+            `M ${x1} ${y1} A ${arrowRadius} ${arrowRadius} 0 0 1 ${x2} ${y2}`
+          );
+          arrowPath.setAttribute("class", "circle-arrow");
+          arrowPath.setAttribute("marker-end", "url(#arrowhead)");
+          arrowsGroup.appendChild(arrowPath);
+        }
+
+        svg.appendChild(arrowsGroup);
+        // --- end arrows ---
+
+        // Draw stages on outermost ring
+        allStages.forEach((stage, index) => {
+          const angle = startAngle + angleStep * index;
+          const x = centerX + outerRadius * Math.cos(angle);
+          const y = centerY + outerRadius * Math.sin(angle);
+
+          const group = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "g"
+          );
+          group.classList.add("stage");
+          group.setAttribute("data-index", index);
+
+          // Background circle
+          const circle = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          circle.setAttribute("cx", x);
+          circle.setAttribute("cy", y);
+          circle.setAttribute("r", stageRadius);
+          circle.classList.add("stage-bg");
+          group.appendChild(circle);
+
+          // Add clip path for circular icon
+          const clipPathId = `clip-${index}`;
+          const clipPath = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "clipPath"
+          );
+          clipPath.setAttribute("id", clipPathId);
+          const clipCircle = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          clipCircle.setAttribute("cx", x);
+          clipCircle.setAttribute("cy", y);
+          clipCircle.setAttribute("r", stageRadius - 2);
+          clipPath.appendChild(clipCircle);
+          svg.appendChild(clipPath);
+
+          // Add icon if available
+          if (stageIcons[stage.stage_number]) {
+            const iconGroup = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "g"
+            );
+            iconGroup.classList.add("stage-icon");
+            iconGroup.setAttribute("clip-path", `url(#${clipPathId})`);
+
+            // Scale and position the icon
+            const iconSize = stageRadius * 1.6;
+            const iconX = x - iconSize / 2;
+            const iconY = y - iconSize / 2;
+
+            iconGroup.innerHTML = `<g transform="translate(${iconX}, ${iconY}) scale(${
+              iconSize / 100
+            })">
+              ${stageIcons[stage.stage_number]}
+            </g>`;
+
+            group.appendChild(iconGroup);
+          }
+
+          // Mouse events for hover tooltip (desktop)
+          group.addEventListener("mouseenter", (e) => showTooltip(e, stage));
+          group.addEventListener("mousemove", (e) => updateTooltipPosition(e));
+          group.addEventListener("mouseleave", hideTooltip);
+
+          // Touch events for mobile
+          group.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            if (currentTooltipStage === stage) {
+              hideTooltip();
+            } else {
+              showTooltip(e.touches[0], stage);
+            }
+          });
+
+          svg.appendChild(group);
+        });
+      }
+
+      function showTooltip(event, stage) {
+        currentTooltipStage = stage;
+        document.getElementById("tooltip-title").textContent = stage.name;
+        document.getElementById(
+          "tooltip-number"
+        ).textContent = `Stage ${stage.stage_number}`;
+        document.getElementById("tooltip-act").textContent = stage.actName;
+        document.getElementById("tooltip-description").textContent =
+          stage.description;
+
+        tooltip.classList.add("visible");
+        updateTooltipPosition(event);
+      }
+
+      function updateTooltipPosition(event) {
+        const offset = 15;
+        let x = event.clientX + offset;
+        let y = event.clientY + offset;
+
+        // Prevent tooltip from going off-screen
+        const tooltipRect = tooltip.getBoundingClientRect();
+        if (x + tooltipRect.width > window.innerWidth) {
+          x = event.clientX - tooltipRect.width - offset;
+        }
+        if (y + tooltipRect.height > window.innerHeight) {
+          y = event.clientY - tooltipRect.height - offset;
+        }
+
+        tooltip.style.left = x + "px";
+        tooltip.style.top = y + "px";
+      }
+
+      function hideTooltip() {
+        currentTooltipStage = null;
+        tooltip.classList.remove("visible");
+      }
+
+      // Hide tooltip when clicking/touching outside
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".stage")) {
+          hideTooltip();
+        }
+      });
+
+      document.addEventListener("touchstart", (e) => {
+        if (!e.target.closest(".stage")) {
+          hideTooltip();
+        }
+      });
+    </script>
+  </body>
+</html>
