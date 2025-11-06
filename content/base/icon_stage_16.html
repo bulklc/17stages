@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Call to Adventure</title>
+    <title>Two Worlds</title>
     <style>
       body {
         margin: 0;
@@ -26,40 +26,33 @@
       }
 
       svg {
-        width: 220px;
-        height: 220px;
+        width: 290px;
+        height: 290px;
       }
     </style>
   </head>
   <body>
     <div class="circle">
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <!-- Open doorway -->
-        <rect
-          x="25"
-          y="15"
-          width="50"
-          height="70"
-          fill="none"
+        <!-- White world (behind) -->
+        <circle
+          cx="60"
+          cy="40"
+          r="30"
           stroke="black"
-          stroke-width="3"
-        />
-
-        <!-- Door (slightly open) -->
-        <path
-          d="M 30 20 L 30 80 L 45 75 L 45 25 Z"
+          stroke-width="5"
           fill="white"
-          stroke="black"
-          stroke-width="3"
         />
 
-        <!-- Door handle -->
-        <circle cx="35" cy="50" r="2" fill="black" />
-
-        <!-- Light coming through -->
-        <line x1="47" y1="35" x2="67" y2="30" stroke="black" stroke-width="2" />
-        <line x1="47" y1="50" x2="67" y2="45" stroke="black" stroke-width="2" />
-        <line x1="47" y1="65" x2="67" y2="60" stroke="black" stroke-width="2" />
+        <!-- Black world (in front) -->
+        <circle
+          cx="40"
+          cy="60"
+          r="30"
+          stroke="black"
+          stroke-width="5"
+          fill="black"
+        />
       </svg>
     </div>
   </body>

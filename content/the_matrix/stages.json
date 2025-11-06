@@ -1,74 +1,92 @@
 [
   {
     "stage_number": 0,
-    "description": "Neo lives a double life as a programmer and hacker. His ordinary world is a simulated reality created by sentient machines to subdue the human population."
+    "description": "Neo lives a double life as a programmer and hacker. His ordinary world is a simulated reality created by sentient machines to subdue the human population.",
+    "time": "00:07:02"
   },
   {
     "stage_number": 1,
-    "description": "Neo is presented with a problem, challenge, or adventure to undertake. This disrupts the comfort of his ordinary world."
+    "description": "Neo is presented with a problem, challenge, or adventure to undertake. This disrupts the comfort of his ordinary world.",
+    "time": "00:11:07"
   },
   {
     "stage_number": 2,
-    "description": "Neo refuses the adventure because of hesitation, fears, insecurity, or any other number of issues that prevent him from facing the unknown."
+    "description": "Neo refuses the adventure because of hesitation, fears, insecurity, or any other number of issues that prevent him from facing the unknown.",
+    "time": "00:16:20"
   },
   {
     "stage_number": 3,
-    "description": "Once Neo has committed to the quest, Morpheus appears to provide supernatural aid, guidance, and a choice between the red pill and the blue pill."
+    "description": "Once Neo has committed to the quest, Morpheus appears to provide supernatural aid, guidance, and a choice between the red pill and the blue pill.",
+    "time": "00:24:21"
   },
   {
     "stage_number": 4,
-    "description": "Neo commits to leaving the ordinary world and enters the special world or unknown. He crosses into the field of adventure, leaving the known limits of his world."
+    "description": "Neo commits to leaving the ordinary world and enters the special world or unknown. He crosses into the field of adventure, leaving the known limits of his world.",
+    "time": "00:32:39"
   },
   {
     "stage_number": 5,
-    "description": "Neo is fully separated from his known world and self. This represents a form of self-annihilation and rebirth. He is swallowed into the unknown."
+    "description": "Neo is fully separated from his known world and self. This represents a form of self-annihilation and rebirth. He is swallowed into the unknown.",
+    "time": "00:34:55"
   },
   {
     "stage_number": 6,
-    "description": "Neo faces tests, tasks, or ordeals that must be overcome. He often fails one or more of these tests, which are repeated until success is achieved."
+    "description": "Neo faces tests, tasks, or ordeals that must be overcome. He often fails one or more of these tests, which are repeated until success is achieved.",
+    "time": "00:54:50"
   },
   {
     "stage_number": 7,
-    "description": "Neo experiences unconditional love, often represented by a powerful female figure. This represents the point when Neo experiences a love that has the power to inspire."
+    "description": "Neo experiences unconditional love, often represented by a powerful female figure. This represents the point when Neo experiences a love that has the power to inspire.",
+    "time": "01:12:55"
   },
   {
     "stage_number": 8,
-    "description": "Neo faces temptations, often of a physical or material nature, that may lead him to abandon or stray from his quest. This tests Neo's ability to focus on the spiritual goal."
+    "description": "Neo faces temptations, often of a physical or material nature, that may lead him to abandon or stray from his quest. This tests Neo's ability to focus on the spiritual goal.",
+    "time": "01:15:02"
   },
   {
     "stage_number": 9,
-    "description": "Neo must confront whatever holds ultimate power in his life. This is often a father figure or authority that has power over life and death."
+    "description": "Neo must confront whatever holds ultimate power in his life. This is often a father figure or authority that has power over life and death.",
+    "time": "02:02:37"
   },
   {
     "stage_number": 10,
-    "description": "Neo achieves a period of rest, peace, and fulfillment before beginning the return. This is the point of realization and greater understanding. Neo dies to his old self."
+    "description": "Neo achieves a period of rest, peace, and fulfillment before beginning the return. This is the point of realization and greater understanding. Neo dies to his old self.",
+    "time": "02:05:14"
   },
   {
     "stage_number": 11,
-    "description": "Neo achieves the goal of the quest. This is the achievement of the goal or the object of the quest. It is what Neo went on the journey to get."
+    "description": "Neo achieves the goal of the quest. This is the achievement of the goal or the object of the quest. It is what Neo went on the journey to get.",
+    "time": "02:05:50"
   },
   {
     "stage_number": 12,
-    "description": "Having found bliss and enlightenment in the other world, Neo may be reluctant to return to the ordinary world to bestow the boon upon his fellow humans."
+    "description": "Having found bliss and enlightenment in the other world, Neo may be reluctant to return to the ordinary world to bestow the boon upon his fellow humans.",
+    "time": "02:06:53"
   },
   {
     "stage_number": 13,
-    "description": "If the boon has been achieved against the opposition of its guardian, Neo's return may be complicated by pursuit and escape. Neo must retain the wisdom gained during the quest."
+    "description": "If the boon has been achieved against the opposition of its guardian, Neo's return may be complicated by pursuit and escape. Neo must retain the wisdom gained during the quest.",
+    "time": "02:07:16"
   },
   {
     "stage_number": 14,
-    "description": "Neo may need powerful guides and rescuers to bring him back to everyday life, especially if he has been wounded or weakened by his experience."
+    "description": "Neo may need powerful guides and rescuers to bring him back to everyday life, especially if he has been wounded or weakened by his experience.",
+    "time": "02:07:33"
   },
   {
     "stage_number": 15,
-    "description": "Neo crosses the return threshold, bringing his knowledge and experience back to the ordinary world. He is transformed by his journey."
+    "description": "Neo crosses the return threshold, bringing his knowledge and experience back to the ordinary world. He is transformed by his journey.",
+    "time": "02:08:43"
   },
   {
     "stage_number": 16,
-    "description": "Neo achieves balance between the material and spiritual, the inner and outer worlds. He has become comfortable and competent in both worlds."
+    "description": "Neo achieves balance between the material and spiritual, the inner and outer worlds. He has become comfortable and competent in both worlds.",
+    "time": "02:08:51"
   },
   {
     "stage_number": 17,
-    "description": "Neo is free from fears and anxieties. He lives in the moment, neither anticipating the future nor regretting the past. This is mastery of life."
+    "description": "Neo is free from fears and anxieties. He lives in the moment, neither anticipating the future nor regretting the past. This is mastery of life.",
+    "time": "02:09:22"
   }
 ]

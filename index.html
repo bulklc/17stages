@@ -426,23 +426,46 @@
 
         for (let i = 0; i <= 17; i++) {
           const paddedNum = i.toString().padStart(2, "0");
-          iconPromises.push(
-            fetch(`./content/${storyFolder}/icon_stage_${paddedNum}.png`)
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error("Icon not found");
-                }
-                return response.blob();
-              })
-              .then((blob) => {
-                const url = URL.createObjectURL(blob);
-                icons[i] = url;
-              })
-              .catch((error) => {
-                // Icon doesn't exist, will fall back to stage number
-                console.log(`Icon ${i} not found for ${storyFolder}`);
-              })
-          );
+
+          // Load thumbnail for small circles
+          const thumbnailPromise = fetch(
+            `./content/${storyFolder}/stage_${paddedNum}_thumbnail.png`
+          )
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Thumbnail not found");
+              }
+              return response.blob();
+            })
+            .then((blob) => {
+              const url = URL.createObjectURL(blob);
+              if (!icons[i]) icons[i] = {};
+              icons[i].thumbnail = url;
+            })
+            .catch((error) => {
+              console.log(`Thumbnail ${i} not found for ${storyFolder}`);
+            });
+
+          // Load larger image for popup
+          const imagePromise = fetch(
+            `./content/${storyFolder}/stage_${paddedNum}_image.png`
+          )
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Image not found");
+              }
+              return response.blob();
+            })
+            .then((blob) => {
+              const url = URL.createObjectURL(blob);
+              if (!icons[i]) icons[i] = {};
+              icons[i].image = url;
+            })
+            .catch((error) => {
+              console.log(`Image ${i} not found for ${storyFolder}`);
+            });
+
+          iconPromises.push(thumbnailPromise, imagePromise);
         }
 
         await Promise.all(iconPromises);
@@ -473,8 +496,17 @@
         const response = await fetch("./content/base/stages.json");
         const data = await response.json();
         stagesData = data.heroic_journey;
+
+        // Set The Matrix as default selection
+        selectedStories = ["matrix"];
+
+        // Load The Matrix data and icons
+        await loadStoryData("the_matrix");
+        await loadStoryIcons("the_matrix");
+
         createCircle();
         populateStoryOptions();
+        updateCenterText();
       }
 
       initialize().catch((error) =>
@@ -975,7 +1007,10 @@
             svg.appendChild(clipPath);
 
             // Add PNG icon if available, otherwise show stage number
-            if (icons[stageData.stage_number]) {
+            if (
+              icons[stageData.stage_number] &&
+              icons[stageData.stage_number].thumbnail
+            ) {
               const iconImage = document.createElementNS(
                 "http://www.w3.org/2000/svg",
                 "image"
@@ -985,7 +1020,10 @@
               const iconX = x - iconSize / 2;
               const iconY = y - iconSize / 2;
 
-              iconImage.setAttribute("href", icons[stageData.stage_number]);
+              iconImage.setAttribute(
+                "href",
+                icons[stageData.stage_number].thumbnail
+              );
               iconImage.setAttribute("x", iconX);
               iconImage.setAttribute("y", iconY);
               iconImage.setAttribute("width", iconSize);
@@ -1016,7 +1054,7 @@
               storyName: story.name,
               actName: campbellStage.actName,
               iconType: icons[stageData.stage_number] ? "png" : null,
-              iconUrl: icons[stageData.stage_number] || null,
+              iconUrl: icons[stageData.stage_number]?.image || null,
             };
 
             group.addEventListener("mouseenter", (e) => {
