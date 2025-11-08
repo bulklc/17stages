@@ -128,6 +128,9 @@
           padding: 15px;
           max-height: 70vh;
           overflow-y: auto;
+          left: 50% !important;
+          top: 50% !important;
+          transform: translate(-50%, -50%);
         }
 
         .hover-tooltip h3 {
@@ -145,13 +148,21 @@
         .tooltip-icon-large {
           margin-bottom: 10px;
         }
+
+        .tooltip-icon-large img {
+          max-height: 30vh;
+          object-fit: contain;
+        }
       }
 
       @media (max-width: 480px) {
         .hover-tooltip {
           max-width: 90vw;
           padding: 12px;
-          max-height: 60vh;
+          max-height: 75vh;
+          left: 50% !important;
+          top: 50% !important;
+          transform: translate(-50%, -50%);
         }
 
         .hover-tooltip h3 {
@@ -167,6 +178,11 @@
         .hover-tooltip p {
           font-size: 0.8em;
           line-height: 1.4;
+        }
+
+        .tooltip-icon-large img {
+          max-height: 25vh;
+          object-fit: contain;
         }
       }
 
@@ -1238,6 +1254,13 @@
       }
 
       function updateTooltipPosition(event) {
+        // On mobile (touch devices), center the tooltip
+        if (window.innerWidth <= 768 || event.type === "touchstart") {
+          // Position will be handled by CSS (centered)
+          return;
+        }
+
+        // Desktop positioning
         const offset = 15;
         let x = event.clientX + offset;
         let y = event.clientY + offset;
@@ -1253,6 +1276,7 @@
 
         tooltip.style.left = x + "px";
         tooltip.style.top = y + "px";
+        tooltip.style.transform = "none";
       }
 
       function hideTooltip() {
