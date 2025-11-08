@@ -1,92 +1,110 @@
 [
   {
     "stage_number": 0,
-    "description": "Neo lives a double life as a programmer and hacker. His ordinary world is a simulated reality created by sentient machines to subdue the human population.",
+    "title": "Neo in the Matrix",
+    "description": "Neo lives a double life as a programmer and hacker. Besides his lingering sense that something is wrong with the world, he is generally unaware of the Matrix, nor does he understand his role in it.",
     "time": "00:07:02"
   },
   {
     "stage_number": 1,
-    "description": "Neo is presented with a problem, challenge, or adventure to undertake. This disrupts the comfort of his ordinary world.",
+    "title": "Trinity Explains the Call",
+    "description": "At a night club, Neo meets Trinity, who addresses his suspicions about there being something more to his world. She explains that he needs to continue searching for the truth, but that he is also in danger.",
     "time": "00:11:07"
   },
   {
     "stage_number": 2,
-    "description": "Neo refuses the adventure because of hesitation, fears, insecurity, or any other number of issues that prevent him from facing the unknown.",
+    "title": "Neo Fails to Follow Morpheus' Instructions",
+    "description": "When Morpheus first contacts Neo and directs him to escape from the agents, Neo hesitates and fails to follow directions, resulting in his capture.",
     "time": "00:16:20"
   },
   {
     "stage_number": 3,
-    "description": "Once Neo has committed to the quest, Morpheus appears to provide supernatural aid, guidance, and a choice between the red pill and the blue pill.",
+    "title": "Trinity Removes the Parasite",
+    "description": "When in a car with Trinity and her team, Neo at first tries to leave. However, following Trinity's advice, Neo decides to stay in the car. Trinity and her team then use advanced technology to remove the parasitic, robotic insect that had been placed in his body previously by the agents.",
     "time": "00:24:21"
   },
   {
     "stage_number": 4,
-    "description": "Neo commits to leaving the ordinary world and enters the special world or unknown. He crosses into the field of adventure, leaving the known limits of his world.",
+    "title": "Neo's Awakening",
+    "description": "After Neo takes the red pill, he crosses the boundary between the simulated reality of the Matrix and the real world, waking up in a pod filled with fluid.",
     "time": "00:32:39"
   },
   {
     "stage_number": 5,
-    "description": "Neo is fully separated from his known world and self. This represents a form of self-annihilation and rebirth. He is swallowed into the unknown.",
+    "title": "Neo in the belly of the human farms",
+    "description": "In the real world, Neo is routed through the many interconnected pipes and channels which support the human-battery farms built by the machines. At this stage, he has very little control of his path, and is at the mercy of the the new environment he has entered.",
     "time": "00:34:55"
   },
   {
     "stage_number": 6,
-    "description": "Neo faces tests, tasks, or ordeals that must be overcome. He often fails one or more of these tests, which are repeated until success is achieved.",
+    "title": "Neo fails his training",
+    "description": "While training with Morpheus in the construct, Neo faces a series of physical and mental tests to prepare him for the challenges he will face in the Matrix. At first, he fails at these tests in many different ways, causing others and himself to doubt his potential.",
     "time": "00:54:50"
   },
   {
     "stage_number": 7,
-    "description": "Neo experiences unconditional love, often represented by a powerful female figure. This represents the point when Neo experiences a love that has the power to inspire.",
+    "title": "Neo meets the Oracle",
+    "description": "Neo meets the Oracle, who provides him with insight, encouragement, and wisdom. She enhances Neo's understanding of the concepts of free will, determinism, and the importance of the phrase \"Temet Nosce\", or \"Know Thyself\".",
     "time": "01:12:55"
   },
   {
     "stage_number": 8,
-    "description": "Neo faces temptations, often of a physical or material nature, that may lead him to abandon or stray from his quest. This tests Neo's ability to focus on the spiritual goal.",
+    "title": "Neo is tempted by self-doubt",
+    "description": "The Oracle causes Neo to reveal his own doubts about himself, and allows him to assess on his own that he is not \"The One\". Thus, he is tempted by his own self-doubt to abandon his quest.",
     "time": "01:15:02"
   },
   {
     "stage_number": 9,
-    "description": "Neo must confront whatever holds ultimate power in his life. This is often a father figure or authority that has power over life and death.",
+    "title": "Neo is shot by Agent Smith",
+    "description": "Neo has his first direct confrontation with Agent Smith, who represents the ultimate authority within the Matrix. During their encounter, Neo is overpowered and nearly killed.",
     "time": "02:02:37"
   },
   {
     "stage_number": 10,
-    "description": "Neo achieves a period of rest, peace, and fulfillment before beginning the return. This is the point of realization and greater understanding. Neo dies to his old self.",
+    "title": "Neo sees the true nature of the Matrix",
+    "description": "After being resurrected by Trinity's kiss, during a short period of peace, Neo experiences a profound transformation in which he fully embraces his identity as \"The One\". He gains a deeper understanding of the Matrix and his role within it.",
     "time": "02:05:14"
   },
   {
     "stage_number": 11,
-    "description": "Neo achieves the goal of the quest. This is the achievement of the goal or the object of the quest. It is what Neo went on the journey to get.",
+    "title": "Neo defeats Agent Smith",
+    "description": "After realizing his true powers, Neo confronts Agent Smith once again. This time, he is able to effortlessly defeat Smith, demonstrating his mastery over the Matrix and solidifying his status as \"The One\".",
     "time": "02:05:50"
   },
   {
     "stage_number": 12,
-    "description": "Having found bliss and enlightenment in the other world, Neo may be reluctant to return to the ordinary world to bestow the boon upon his fellow humans.",
+    "title": "Neo's reluctance to leave the Matrix",
+    "description": "After defeating Agent Smith, Neo is reluctant to take the phone call and leave the Matrix for a short time. He considers staying inside the Matrix to continue fighting the other agents.",
     "time": "02:06:53"
   },
   {
     "stage_number": 13,
-    "description": "If the boon has been achieved against the opposition of its guardian, Neo's return may be complicated by pursuit and escape. Neo must retain the wisdom gained during the quest.",
+    "title": "Sentinels breach the Nebuchadnezzar",
+    "description": "Neo's return to the \"real world\" is complicated by the Sentinels piercing inside the Nebuchadnezzar, placing Neo and the crew in direct, immediate danger. If he is killed while still inside the Matrix, he will not be able to safely return to the real world.",
     "time": "02:07:16"
   },
   {
     "stage_number": 14,
-    "description": "Neo may need powerful guides and rescuers to bring him back to everyday life, especially if he has been wounded or weakened by his experience.",
+    "title": "Trinity helps Neo escape the Matrix alive",
+    "description": "Trinity's love rescues Neo from certain death as he is being attacked by the Sentinels. Neo is brought back to the real world just in time to evade death.",
     "time": "02:07:33"
   },
   {
     "stage_number": 15,
-    "description": "Neo crosses the return threshold, bringing his knowledge and experience back to the ordinary world. He is transformed by his journey.",
+    "title": "Neo's phone call",
+    "description": "Neo once again enters into the Matrix, but now as a much more empowered Hero.",
     "time": "02:08:43"
   },
   {
     "stage_number": 16,
-    "description": "Neo achieves balance between the material and spiritual, the inner and outer worlds. He has become comfortable and competent in both worlds.",
+    "title": "Neo leaves the phone booth",
+    "description": "Neo exits the phone booth, symbolizing his ability to operate within the Matrix while maintaining agency in the real world.",
     "time": "02:08:51"
   },
   {
     "stage_number": 17,
-    "description": "Neo is free from fears and anxieties. He lives in the moment, neither anticipating the future nor regretting the past. This is mastery of life.",
+    "title": "Neo flies",
+    "description": "Neo has achieved supreme mastery over the Matrix, symbolized by his ability to fly. He now has full control over both worlds, and is free to live as he chooses.",
     "time": "02:09:22"
   }
 ]

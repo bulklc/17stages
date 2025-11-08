@@ -121,6 +121,55 @@
         border: 2px solid #ffd700;
       }
 
+      /* Mobile responsiveness for tooltip */
+      @media (max-width: 768px) {
+        .hover-tooltip {
+          max-width: 85vw;
+          padding: 15px;
+          max-height: 70vh;
+          overflow-y: auto;
+        }
+
+        .hover-tooltip h3 {
+          font-size: 1.1em;
+        }
+
+        .hover-tooltip .tooltip-meta {
+          font-size: 0.75em;
+        }
+
+        .hover-tooltip p {
+          font-size: 0.85em;
+        }
+
+        .tooltip-icon-large {
+          margin-bottom: 10px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hover-tooltip {
+          max-width: 90vw;
+          padding: 12px;
+          max-height: 60vh;
+        }
+
+        .hover-tooltip h3 {
+          font-size: 1em;
+          margin-bottom: 6px;
+        }
+
+        .hover-tooltip .tooltip-meta {
+          font-size: 0.7em;
+          margin-bottom: 8px;
+        }
+
+        .hover-tooltip p {
+          font-size: 0.8em;
+          line-height: 1.4;
+        }
+      }
+
       .hover-tooltip.visible {
         opacity: 1;
       }
@@ -1048,11 +1097,13 @@
             // Get the corresponding Campbell stage name
             const campbellStage = allStages[index];
             const tooltipData = {
-              name: campbellStage.name,
+              name: stageData.title || campbellStage.name, // Use story's title if available, otherwise Campbell's name
               description: stageData.description,
               stage_number: stageData.stage_number,
               storyName: story.name,
               actName: campbellStage.actName,
+              campbellStageName: campbellStage.name, // Add Campbell's stage name
+              time: stageData.time, // Add timestamp
               iconType: icons[stageData.stage_number] ? "png" : null,
               iconUrl: icons[stageData.stage_number]?.image || null,
             };
@@ -1115,11 +1166,20 @@
           stage.name || `Stage ${stage.stage_number}`;
 
         let metaText = `Stage ${stage.stage_number}`;
-        if (stage.actName) {
+        if (stage.campbellStageName) {
+          // For story stages, show Campbell's base stage name
+          metaText += ` | ${stage.campbellStageName}`;
+        } else if (stage.actName) {
+          // For Campbell's stages, show act name
           metaText += ` | ${stage.actName}`;
         }
         if (stage.storyName) {
           metaText = `${stage.storyName} - ${metaText}`;
+        }
+
+        // Add timestamp if available
+        if (stage.time) {
+          metaText += ` | ${stage.time}`;
         }
 
         document.getElementById("tooltip-number").textContent = metaText;
