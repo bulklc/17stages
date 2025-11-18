@@ -432,29 +432,15 @@
       const storyIcons = {}; // Cache for story-specific icons
       let connectionLinesGroup = null; // Group for connection lines
 
-      // Available stories in the workspace (excluding base, which is always shown)
+      // Change the availableStories structure to include id
       const availableStories = [
-        { id: "matrix", name: "The Matrix", folder: "the_matrix" },
-        { id: "star_wars", name: "Star Wars", folder: "star_wars" },
+        { id: "the_matrix", name: "The Matrix", folder: "the_matrix" },
         { id: "sister_act", name: "Sister Act", folder: "sister_act" },
-        { id: "sister_act_2", name: "Sister Act 2", folder: "sister_act_2" },
-        {
-          id: "alice",
-          name: "Alice in Wonderland",
-          folder: "alice_in_wonderland",
-        },
-        { id: "hereditary", name: "Hereditary", folder: "hereditary" },
-        { id: "interstellar", name: "Interstellar", folder: "interstellar" },
-        { id: "the_shining", name: "The Shining", folder: "the_shining" },
-        {
-          id: "tim_and_erics",
-          name: "Tim and Eric's Billion Dollar Movie",
-          folder: "tim_and_erics_billion_dollar_movie",
-        },
-        { id: "toy_story", name: "Toy Story", folder: "toy_story" },
+        { id: "pig", name: "Pig", folder: "pig" },
       ];
 
-      let selectedStories = []; // Additional stories to compare (max 3)
+      // Update the default selection to use the id
+      let selectedStories = ["the_matrix", "pig"];
 
       // Load all stage icons for base (Campbell's)
       async function loadStageIcons() {
@@ -562,12 +548,14 @@
         const data = await response.json();
         stagesData = data.heroic_journey;
 
-        // Set The Matrix as default selection
-        selectedStories = [];
-
-        // Load The Matrix data and icons
-        // await loadStoryData("the_matrix");
-        // await loadStoryIcons("the_matrix");
+        // Load default selected stories data and icons
+        for (const storyId of selectedStories) {
+          const story = availableStories.find((s) => s.id === storyId);
+          if (story) {
+            await loadStoryData(story.folder);
+            await loadStoryIcons(story.folder);
+          }
+        }
 
         createCircle();
         populateStoryOptions();
