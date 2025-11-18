@@ -440,7 +440,8 @@
       ];
 
       // Update the default selection to use the id
-      let selectedStories = ["the_matrix", "pig"];
+      // let selectedStories = ["the_matrix", "pig"];
+      let selectedStories = [];
 
       // Load all stage icons for base (Campbell's)
       async function loadStageIcons() {
@@ -1250,16 +1251,29 @@
 
         // Desktop positioning
         const offset = 15;
+        const tooltipRect = tooltip.getBoundingClientRect();
+
         let x = event.clientX + offset;
         let y = event.clientY + offset;
 
-        // Prevent tooltip from going off-screen
-        const tooltipRect = tooltip.getBoundingClientRect();
+        // Prevent tooltip from going off-screen horizontally
         if (x + tooltipRect.width > window.innerWidth) {
           x = event.clientX - tooltipRect.width - offset;
         }
+
+        // If it would still go off the left edge, clamp it
+        if (x < 0) {
+          x = offset;
+        }
+
+        // Prevent tooltip from going off-screen vertically
         if (y + tooltipRect.height > window.innerHeight) {
           y = event.clientY - tooltipRect.height - offset;
+        }
+
+        // If it would still go off the top edge, clamp it
+        if (y < 0) {
+          y = offset;
         }
 
         tooltip.style.left = x + "px";
