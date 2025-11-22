@@ -52,6 +52,14 @@
 
       .stage:hover circle.stage-bg {
         fill: #ffd700;
+        stroke: #ffd700; /* This should already be gold */
+        stroke-width: 4;
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+      }
+
+      .stage[data-ring]:hover circle.stage-bg {
+        fill: #ffd700;
+        stroke: #ffd700 !important; /* Important to override inline style */
         stroke-width: 4;
         filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
       }
@@ -384,6 +392,50 @@
         font-size: 0.9em;
         margin-top: 10px;
       }
+
+      /* Loading overlay */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+      }
+
+      .loading-overlay.visible {
+        display: flex;
+      }
+
+      .loading-spinner {
+        width: 80px;
+        height: 80px;
+        border: 8px solid rgba(255, 215, 0, 0.2);
+        border-top: 8px solid #ffd700;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading-text {
+        position: absolute;
+        color: #ffd700;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 120px;
+      }
     </style>
   </head>
   <body>
@@ -420,6 +472,14 @@
             Apply
           </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+      <div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading stories...</div>
       </div>
     </div>
 
@@ -544,6 +604,7 @@
 
       // Load the stages data
       async function initialize() {
+        showLoading(); // Show loading indicator
         await loadStageIcons();
         const response = await fetch("./content/base/stages.json");
         const data = await response.json();
@@ -561,6 +622,7 @@
         createCircle();
         populateStoryOptions();
         updateCenterText();
+        hideLoading(); // Hide loading indicator
       }
 
       initialize().catch((error) =>
@@ -625,7 +687,16 @@
         document.getElementById("story-modal").classList.remove("visible");
       }
 
+      function showLoading() {
+        document.getElementById("loading-overlay").classList.add("visible");
+      }
+
+      function hideLoading() {
+        document.getElementById("loading-overlay").classList.remove("visible");
+      }
+
       async function applySelection() {
+        showLoading(); // Show loading indicator
         closeModal();
 
         // Load all selected story data and icons
@@ -640,6 +711,8 @@
         // Redraw the circle with all stories
         await createCircle();
         updateCenterText();
+
+        hideLoading(); // Hide loading indicator
       }
 
       function updateCenterText() {
@@ -922,6 +995,7 @@
           circle.setAttribute("cy", y);
           circle.setAttribute("r", stageRadius);
           circle.classList.add("stage-bg");
+          // Remove or don't set stroke attribute here for base stages
           group.appendChild(circle);
 
           // Add clip path for circular icon
