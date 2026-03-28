@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -536,11 +536,12 @@
         { id: "the_matrix", name: "The Matrix", folder: "the_matrix" },
         { id: "sister_act", name: "Sister Act", folder: "sister_act" },
         { id: "pig", name: "Pig", folder: "pig" },
+        { id: "office_space", name: "Office Space", folder: "office_space" },
       ];
 
       // Update the default selection to use the id
       // let selectedStories = ["the_matrix", "pig"];
-      let selectedStories = [];
+      let selectedStories = ["office_space"];
 
       // Load all stage icons for base (Campbell's)
       async function loadStageIcons() {
@@ -559,8 +560,8 @@
                 }
               })
               .catch((error) =>
-                console.error(`Error loading icon ${i}:`, error)
-              )
+                console.error(`Error loading icon ${i}:`, error),
+              ),
           );
         }
         await Promise.all(iconPromises);
@@ -580,7 +581,7 @@
 
           // Load thumbnail for small circles
           const thumbnailPromise = fetch(
-            `./content/${storyFolder}/stage_${paddedNum}_thumbnail.png`
+            `./content/${storyFolder}/stage_${paddedNum}_thumbnail.png`,
           )
             .then((response) => {
               if (!response.ok) {
@@ -599,7 +600,7 @@
 
           // Load larger image for popup
           const imagePromise = fetch(
-            `./content/${storyFolder}/stage_${paddedNum}_image.png`
+            `./content/${storyFolder}/stage_${paddedNum}_image.png`,
           )
             .then((response) => {
               if (!response.ok) {
@@ -665,7 +666,7 @@
       }
 
       initialize().catch((error) =>
-        console.error("Error initializing:", error)
+        console.error("Error initializing:", error),
       );
 
       function populateStoryOptions() {
@@ -761,7 +762,7 @@
           centerTextElements[1].textContent = "Stories";
         } else if (selectedStories.length === 1) {
           const story = availableStories.find(
-            (s) => s.id === selectedStories[0]
+            (s) => s.id === selectedStories[0],
           );
           centerTextElements[0].textContent = "Comparing:";
           centerTextElements[1].textContent = story.name;
@@ -783,7 +784,7 @@
 
         // Then highlight the lines for the hovered stage (yellow and thicker)
         const lines = connectionLinesGroup.querySelectorAll(
-          `.connection-line[data-stage="${stageIndex}"]`
+          `.connection-line[data-stage="${stageIndex}"]`,
         );
         lines.forEach((line) => line.classList.add("visible"));
       }
@@ -833,11 +834,11 @@
         // --- Arrowhead marker (for curved arrows) ---
         const defs = document.createElementNS(
           "http://www.w3.org/2000/svg",
-          "defs"
+          "defs",
         );
         const marker = document.createElementNS(
           "http://www.w3.org/2000/svg",
-          "marker"
+          "marker",
         );
         marker.setAttribute("id", "arrowhead");
         marker.setAttribute("viewBox", "0 0 10 10");
@@ -848,7 +849,7 @@
         marker.setAttribute("orient", "auto");
         const markerPath = document.createElementNS(
           "http://www.w3.org/2000/svg",
-          "path"
+          "path",
         );
         markerPath.setAttribute("d", "M 0 0 L 10 5 L 0 10 z");
         markerPath.setAttribute("fill", "#666");
@@ -860,7 +861,7 @@
         // Create connection lines group (before other elements so lines appear behind)
         connectionLinesGroup = document.createElementNS(
           "http://www.w3.org/2000/svg",
-          "g"
+          "g",
         );
         connectionLinesGroup.classList.add("connection-lines");
         svg.appendChild(connectionLinesGroup);
@@ -868,7 +869,7 @@
         // Draw center circle (clickable)
         const centerCircle = document.createElementNS(
           "http://www.w3.org/2000/svg",
-          "circle"
+          "circle",
         );
         centerCircle.setAttribute("cx", centerX);
         centerCircle.setAttribute("cy", centerY);
@@ -879,7 +880,7 @@
 
         const centerText = document.createElementNS(
           "http://www.w3.org/2000/svg",
-          "text"
+          "text",
         );
         centerText.setAttribute("x", centerX);
         centerText.setAttribute("y", centerY - 5);
@@ -889,7 +890,7 @@
 
         const centerText2 = document.createElementNS(
           "http://www.w3.org/2000/svg",
-          "text"
+          "text",
         );
         centerText2.setAttribute("x", centerX);
         centerText2.setAttribute("y", centerY + 15);
@@ -922,7 +923,7 @@
 
           const path = document.createElementNS(
             "http://www.w3.org/2000/svg",
-            "path"
+            "path",
           );
           const startX = centerX + outerRadius * Math.cos(currentAngle);
           const startY = centerY + outerRadius * Math.sin(currentAngle);
@@ -934,7 +935,7 @@
 
           path.setAttribute(
             "d",
-            `M ${startX} ${startY} A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${endX} ${endY}`
+            `M ${startX} ${startY} A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${endX} ${endY}`,
           );
           path.classList.add("act-segment");
           path.setAttribute("stroke", actColors[act.act_number - 1]);
@@ -949,7 +950,7 @@
           };
 
           path.addEventListener("mouseenter", (e) =>
-            showActTooltip(e, actData)
+            showActTooltip(e, actData),
           );
           path.addEventListener("mousemove", (e) => updateTooltipPosition(e));
           path.addEventListener("mouseleave", hideTooltip);
@@ -972,7 +973,7 @@
         const arrowRadius = outerRadius - stageRadius - 12;
         const arrowsGroup = document.createElementNS(
           "http://www.w3.org/2000/svg",
-          "g"
+          "g",
         );
         arrowsGroup.setAttribute("class", "direction-arrows");
 
@@ -992,11 +993,11 @@
 
           const arrowPath = document.createElementNS(
             "http://www.w3.org/2000/svg",
-            "path"
+            "path",
           );
           arrowPath.setAttribute(
             "d",
-            `M ${x1} ${y1} A ${arrowRadius} ${arrowRadius} 0 0 1 ${x2} ${y2}`
+            `M ${x1} ${y1} A ${arrowRadius} ${arrowRadius} 0 0 1 ${x2} ${y2}`,
           );
           arrowPath.setAttribute("class", "circle-arrow");
           arrowPath.setAttribute("marker-end", "url(#arrowhead)");
@@ -1019,7 +1020,7 @@
 
           const group = document.createElementNS(
             "http://www.w3.org/2000/svg",
-            "g"
+            "g",
           );
           group.classList.add("stage");
           group.setAttribute("data-index", index);
@@ -1028,7 +1029,7 @@
           // Background circle
           const circle = document.createElementNS(
             "http://www.w3.org/2000/svg",
-            "circle"
+            "circle",
           );
           circle.setAttribute("cx", x);
           circle.setAttribute("cy", y);
@@ -1041,12 +1042,12 @@
           const clipPathId = `clip-base-${index}`;
           const clipPath = document.createElementNS(
             "http://www.w3.org/2000/svg",
-            "clipPath"
+            "clipPath",
           );
           clipPath.setAttribute("id", clipPathId);
           const clipCircle = document.createElementNS(
             "http://www.w3.org/2000/svg",
-            "circle"
+            "circle",
           );
           clipCircle.setAttribute("cx", x);
           clipCircle.setAttribute("cy", y);
@@ -1058,7 +1059,7 @@
           if (stageIcons[stage.stage_number]) {
             const iconGroup = document.createElementNS(
               "http://www.w3.org/2000/svg",
-              "g"
+              "g",
             );
             iconGroup.classList.add("stage-icon");
             iconGroup.setAttribute("clip-path", `url(#${clipPathId})`);
@@ -1136,7 +1137,7 @@
 
             const group = document.createElementNS(
               "http://www.w3.org/2000/svg",
-              "g"
+              "g",
             );
             group.classList.add("stage");
             group.setAttribute("data-story", storyId);
@@ -1146,7 +1147,7 @@
             // Background circle
             const circle = document.createElementNS(
               "http://www.w3.org/2000/svg",
-              "circle"
+              "circle",
             );
             circle.setAttribute("cx", x);
             circle.setAttribute("cy", y);
@@ -1160,12 +1161,12 @@
             const clipPathId = `clip-${storyId}-${index}`;
             const clipPath = document.createElementNS(
               "http://www.w3.org/2000/svg",
-              "clipPath"
+              "clipPath",
             );
             clipPath.setAttribute("id", clipPathId);
             const clipCircle = document.createElementNS(
               "http://www.w3.org/2000/svg",
-              "circle"
+              "circle",
             );
             clipCircle.setAttribute("cx", x);
             clipCircle.setAttribute("cy", y);
@@ -1180,7 +1181,7 @@
             ) {
               const iconImage = document.createElementNS(
                 "http://www.w3.org/2000/svg",
-                "image"
+                "image",
               );
 
               const iconSize = stageRadius * 0.85 * 2;
@@ -1189,7 +1190,7 @@
 
               iconImage.setAttribute(
                 "href",
-                icons[stageData.stage_number].thumbnail
+                icons[stageData.stage_number].thumbnail,
               );
               iconImage.setAttribute("x", iconX);
               iconImage.setAttribute("y", iconY);
@@ -1203,7 +1204,7 @@
               // Fallback to stage number if no icon
               const stageText = document.createElementNS(
                 "http://www.w3.org/2000/svg",
-                "text"
+                "text",
               );
               stageText.setAttribute("x", x);
               stageText.setAttribute("y", y);
@@ -1231,7 +1232,7 @@
               showConnectionLines(index);
             });
             group.addEventListener("mousemove", (e) =>
-              updateTooltipPosition(e)
+              updateTooltipPosition(e),
             );
             group.addEventListener("mouseleave", (e) => {
               hideTooltip();
@@ -1261,7 +1262,7 @@
               for (let i = 0; i < positions.length - 1; i++) {
                 const line = document.createElementNS(
                   "http://www.w3.org/2000/svg",
-                  "line"
+                  "line",
                 );
                 line.setAttribute("x1", positions[i].x);
                 line.setAttribute("y1", positions[i].y);
@@ -1331,9 +1332,8 @@
           .classList.remove("visible");
 
         document.getElementById("tooltip-title").textContent = actData.name;
-        document.getElementById(
-          "tooltip-number"
-        ).textContent = `Act ${actData.number} | ${actData.stageCount} Stages`;
+        document.getElementById("tooltip-number").textContent =
+          `Act ${actData.number} | ${actData.stageCount} Stages`;
 
         // Generate description based on act
         let description = "";
