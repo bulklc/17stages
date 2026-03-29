@@ -2,67 +2,68 @@
   {
     "stage_number": 0,
     "title": "Peter Gibbons' Mundane Life",
-    "description": "Peter's routine office life is borning, monotonous and soul-crushing. He has very little autonomy or motivation and is stuck in a dead-end job at Initech.",
+    "description": "Peter's routine office life is boring, monotonous and soul-crushing. He has very little autonomy or motivation and is stuck in a dead-end job at Initech.",
     "time": "00:04:24"
   },
   {
     "stage_number": 1,
-    "title": "",
-    "description": "",
-    "time": ""
+    "title": "Initech hires the consultants",
+    "description": "Initech announces that it has brought in outside consultants to evaluate the company's operations, with the clear implication that layoffs are coming. For Peter, this disrupts even the grim comfort of his routine — the system he has been sleepwalking through may no longer have a place for him at all.",
+    "time": "00:17:45"
   },
   {
     "stage_number": 2,
-    "title": "",
-    "description": "",
-    "time": ""
+    "title": "Peter is caught by Lumbergh",
+    "description": "Peter tries to sneak out of the office on Friday afternoon, but his computer takes too long to shut down and Lumbergh catches him before he can escape. Despite his growing awareness that a different life is possible, Peter is still far from being able to act on it, and quietly accepts yet another weekend of work.",
+    "time": "00:20:10"
   },
   {
     "stage_number": 3,
-    "title": "",
-    "description": "",
-    "time": ""
+    "title": "Peter gets hypnotized",
+    "description": "Peter undergoes hypnotherapy at the suggestion of his partner Anne. Dr. Swanson (the therapist) places him into a deep state of relaxation, providing him with a form of aid that strips away the anxiety and obedience that have defined his entire adult life.",
+    "time": "00:22:28"
   },
   {
     "stage_number": 4,
-    "title": "",
-    "description": "",
-    "time": ""
+    "title": "Dr. Swanson's heart attack",
+    "description": "Dr. Swanson dies of a heart attack before he can bring Peter out of his trance. What was meant to be a temporary intervention becomes a permanent transformation, and Peter crosses fully into a new state of being with no way back.",
+    "time": "00:23:16"
   },
   {
     "stage_number": 5,
-    "title": "",
-    "description": "",
-    "time": ""
+    "title": "Peter sleeps through the morning",
+    "description": "Peter sleeps peacefully as calls from Initech pile up on his answering machine. He is now completely detached from the world that once controlled every aspect of his life, fully swallowed by whatever the hypnotherapy has made him into.",
+    "time": "00:24:33"
   },
   {
     "stage_number": 6,
-    "title": "",
-    "description": "",
-    "time": ""
+    "title": "Peter talks to Anne",
+    "description": "When Anne calls to confront Peter about his behavior, he responds with flat indifference, leading her to break up with him over voicemail. While this moment appears liberating, Peter's reasoning is entirely surface-level — he simply doesn't care, rather than having any deeper understanding of what he actually wants or who he is becoming.",
+    "time": "00:25:16"
   },
+
   {
     "stage_number": 7,
-    "title": "",
-    "description": "",
-    "time": ""
+    "title": "Peter's Date with Joanna",
+    "description": "Peter takes Joanna to a restaurant, where the two bond over a shared hatred of their jobs and the petty indignities of corporate life. In Joanna, Peter experiences a form of unconditional acceptance that inspires him to continue being the honest, unburdened person he has started to become.",
+    "time": "00:32:09"
   },
   {
     "stage_number": 8,
-    "title": "",
-    "description": "",
-    "time": ""
+    "title": "Peter's meeting with the Bobs",
+    "description": "During his meeting with the corporate consultants both named Bob, Peter offers a series of honest, unfiltered responses that reveal his true feelings about his job, his boss, and his life. In response, the Bobs indirectly offer a promotion and enhanced compensation. Although Peter doesn't explicitly reject the idea, his muted response shows that he effectively rejects the temptation to fall back into a frame of mind based entirely in corporate success and material gain.",
+    "time": "00:37:03"
   },
   {
     "stage_number": 9,
-    "title": "",
-    "description": "",
-    "time": ""
+    "title": "Peter learns about Joanna and Lumbergh",
+    "description": "Peter discovers that Joanna may have slept with Lumbergh, and is devastated. By this point, Peter has openly defied Lumbergh in nearly every way — ignoring him in the hallway, gutting a fish at his desk, tearing down his own cubicle wall. Yet this single revelation undoes all of that defiance, proving that Lumbergh still holds a deep, almost primal power over Peter's sense of self.",
+    "time": "01:04:30"
   },
   {
     "stage_number": 10,
     "title": "Peter admits the truth to Joanna",
-    "description": "Peter meets with Joanna and confesses that he was wrong to judge her, acknowledging the hypocrisy she had called out in him. In this moment, Peter achieves a genuine understanding of himself and others.",
+    "description": "Peter meets with Joanna and confesses that he was wrong to judge her, acknowledging the hypocrisy she had called out in him. In this moment, the apathetic, disengaged person Peter was at the start of the story is fully gone.",
     "time": "01:16:41"
   },
   {
@@ -73,14 +74,14 @@
   },
   {
     "stage_number": 12,
-    "title": "Peter's acceptance of the consequences",
-    "description": "Following his confession, Peter talks with Lawrence on the apartment stairs and openly admits that he could be going to prison. Rather than panic or regret, he is calm and matter-of-fact about the consequences of his choices.",
-    "time": "01:19:08"
+    "title": "Peter tries to take back the confession",
+    "description": "Immediately after sliding the confession under Lumbergh's door, Peter drops to the floor and desperately tries to pull it back. Having just demonstrated complete moral honesty, he immediately recoils from the consequences of his own growth.",
+    "time": "01:17:38"
   },
   {
     "stage_number": 13,
     "title": "Milton burns down Initech",
-    "description": "Milton sets fire to the Initech building, destroying the confession letter and all evidence of the theft. In this moment, Peter is \"rescued\" from the danger of facing the true consequences of his actions, though he was ready to accept them.",
+    "description": "Milton sets fire to the Initech building, destroying the confession letter and all evidence of the theft. The very system that once controlled Peter's life is consumed entirely, clearing his path to a new one.",
     "time": "01:20:22"
   },
   {
